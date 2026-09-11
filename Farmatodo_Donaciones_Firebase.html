@@ -12,7 +12,6 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
   import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
-  // Proyecto Firebase reutilizado: cendis-noc26
   const firebaseConfig = {
     apiKey: "AIzaSyCrFXzXL1hoDYRrmXwILK4sSanJ28acOxA",
     authDomain: "cendis-noc26.firebaseapp.com",
@@ -44,7 +43,6 @@
     if (txt) txt.textContent = online ? '☁ En línea' : '○ Sin conexión';
   };
 
-  // Arranque: cargar remoto, poblar, refrescar UI, luego escuchar en tiempo real
   window.addEventListener('DOMContentLoaded', async () => {
     try {
       const remoto = await window.fbLoad('donaciones_data', 'main');
@@ -67,7 +65,6 @@
   --ftd-azul-1:#001E62; --ftd-azul-2:#418FDE;
   --ftd-azul-1-600:#0A2E80; --ftd-azul-2-700:#1F6BB8;
   --ftd-azul-2-200:#C7DEF7; --ftd-azul-2-100:#E7F1FC; --ftd-azul-2-300:#9BC4EF;
-  --ftd-cat-belleza:#470A68; --ftd-cat-bebe:#00A499; --ftd-cat-salud:#A8AD00; --ftd-cat-masc:#221C35;
   --ftd-blanco:#fff; --ftd-gris-50:#F7F9FC; --ftd-gris-100:#F2F5F9; --ftd-gris-200:#E5E9F0;
   --ftd-gris-300:#C9D1DE; --ftd-gris-400:#9AA6B8; --ftd-gris-500:#647188; --ftd-gris-600:#4A566B;
   --ftd-gris-700:#2E3950; --ftd-gris-800:#1A2333;
@@ -78,10 +75,10 @@
   --ftd-sombra:0 1px 2px rgba(0,30,98,.06),0 6px 20px rgba(0,30,98,.07);
 }
 *,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
 body{margin:0;font-family:var(--ftd-font);font-size:15px;line-height:1.55;color:var(--ftd-gris-800);background:var(--ftd-gris-50);-webkit-font-smoothing:antialiased;}
 h1,h2,h3{font-weight:700;color:var(--ftd-azul-1);margin:0 0 .5em;letter-spacing:-0.01em;}
 
-/* Cabecera */
 .hdr{background:linear-gradient(115deg,#001E62 0%,#001E62 45%,#0B3C86 100%);color:#fff;padding:18px 26px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
 .hdr .logo{height:36px;flex:0 0 auto;}
 .hdr .logo svg{height:36px;width:auto;display:block;}
@@ -90,8 +87,8 @@ h1,h2,h3{font-weight:700;color:var(--ftd-azul-1);margin:0 0 .5em;letter-spacing:
 .hdr .hmeta{margin-left:auto;text-align:right;font-size:12px;color:var(--ftd-azul-2-200);}
 .hdr .hmeta b{color:#fff;font-size:13px;}
 
-/* Tabs */
-.tabs{display:flex;gap:4px;background:#fff;border-bottom:2px solid var(--ftd-azul-1);padding:0 20px;position:sticky;top:0;z-index:50;overflow-x:auto;}
+.tabs{display:flex;gap:4px;background:#fff;border-bottom:2px solid var(--ftd-azul-1);padding:0 20px;position:sticky;top:0;z-index:50;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
 .tab{border:0;background:none;cursor:pointer;font-family:inherit;font-size:14px;font-weight:700;color:var(--ftd-gris-500);padding:14px 18px;border-bottom:3px solid transparent;white-space:nowrap;}
 .tab.active{color:var(--ftd-azul-1);border-bottom-color:var(--ftd-azul-2);}
 .tab:hover{color:var(--ftd-azul-1);}
@@ -100,94 +97,124 @@ h1,h2,h3{font-weight:700;color:var(--ftd-azul-1);margin:0 0 .5em;letter-spacing:
 .view{display:none;}
 .view.active{display:block;}
 
-/* Filtros */
 .filtros{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;background:#fff;border:var(--ftd-borde);border-radius:var(--ftd-radio);padding:14px 18px;margin-bottom:20px;box-shadow:var(--ftd-sombra);}
 .fgrp{display:flex;flex-direction:column;gap:4px;}
 .fgrp label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ftd-gris-500);}
-select,input,textarea{font-family:inherit;font-size:14px;color:var(--ftd-gris-800);border:1px solid var(--ftd-gris-300);border-radius:var(--ftd-radio-sm);padding:9px 11px;background:#fff;min-height:38px;}
+select,input,textarea{font-family:inherit;font-size:14px;color:var(--ftd-gris-800);border:1px solid var(--ftd-gris-300);border-radius:var(--ftd-radio-sm);padding:9px 11px;background:#fff;min-height:40px;max-width:100%;}
 select:focus,input:focus,textarea:focus{outline:2px solid var(--ftd-azul-2);border-color:var(--ftd-azul-2);}
 .filtro-info{margin-left:auto;font-size:13px;color:var(--ftd-gris-500);}
 .filtro-info b{color:var(--ftd-azul-1);}
 
-/* KPIs */
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:22px;}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:22px;}
 .kpi{background:#fff;border:var(--ftd-borde);border-left:4px solid var(--ftd-azul-2);border-radius:var(--ftd-radio);box-shadow:var(--ftd-sombra);padding:16px 18px;}
 .kpi .lbl{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ftd-gris-500);font-weight:700;margin-bottom:6px;}
-.kpi .val{font-size:30px;font-weight:700;color:var(--ftd-azul-1);line-height:1.05;letter-spacing:-0.02em;}
+.kpi .val{font-size:30px;font-weight:700;color:var(--ftd-azul-1);line-height:1.05;letter-spacing:-0.02em;word-break:break-word;}
 .kpi .sub{font-size:12px;color:var(--ftd-gris-500);margin-top:4px;min-height:16px;}
 .kpi--marca{background:var(--ftd-azul-1);border-color:var(--ftd-azul-1);border-left-color:var(--ftd-azul-2);}
 .kpi--marca .lbl{color:var(--ftd-azul-2-300);} .kpi--marca .val{color:#fff;} .kpi--marca .sub{color:var(--ftd-azul-2-200);}
 .kpi--ok{border-left-color:var(--ftd-ok);} .kpi--alerta{border-left-color:var(--ftd-alerta);}
 
-/* Cards / charts */
 .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:20px;}
 .card{background:#fff;border:var(--ftd-borde);border-radius:var(--ftd-radio);box-shadow:var(--ftd-sombra);padding:18px 20px;margin-bottom:20px;}
 .card h3{font-size:16px;margin:0 0 4px;}
 .card .chint{font-size:12px;color:var(--ftd-gris-500);margin:0 0 14px;}
 .chart-box{position:relative;height:300px;}
-.chart-box.tall{height:340px;}
+.chart-box.tall{height:320px;}
+.card--sec{background:var(--ftd-gris-50);}
 
-/* Formulario */
-.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;}
 .field{display:flex;flex-direction:column;gap:5px;}
 .field label{font-size:12px;font-weight:700;color:var(--ftd-gris-600);}
 .field label .req{color:var(--ftd-riesgo);}
 .field-full{grid-column:1/-1;}
-.form-actions{display:flex;gap:12px;align-items:center;margin-top:20px;flex-wrap:wrap;}
-.btn{border:0;cursor:pointer;background:var(--ftd-azul-1);color:#fff;font-family:inherit;font-size:14px;font-weight:700;padding:11px 22px;border-radius:var(--ftd-radio-sm);min-height:40px;}
+.form-actions{display:flex;gap:12px;align-items:center;margin-top:22px;flex-wrap:wrap;}
+.btn{border:0;cursor:pointer;background:var(--ftd-azul-1);color:#fff;font-family:inherit;font-size:14px;font-weight:700;padding:11px 22px;border-radius:var(--ftd-radio-sm);min-height:42px;}
 .btn:hover{background:var(--ftd-azul-1-600);}
 .btn--sec{background:#fff;color:var(--ftd-azul-1);border:1px solid var(--ftd-azul-1);}
 .btn--acento{background:var(--ftd-azul-2);}
-.btn--sm{padding:7px 14px;font-size:13px;min-height:34px;}
-.btn--danger{background:#fff;color:var(--ftd-riesgo);border:1px solid var(--ftd-riesgo);}
-.msg{padding:11px 16px;border-radius:var(--ftd-radio-sm);font-weight:700;font-size:14px;display:none;}
+.btn--sm{padding:8px 14px;font-size:13px;min-height:36px;}
+.msg{padding:11px 16px;border-radius:var(--ftd-radio-sm);font-weight:700;font-size:14px;display:none;margin-bottom:6px;}
 .msg.ok{display:block;background:#DCF4F2;color:#00655E;border:1px solid #00A499;}
 .msg.err{display:block;background:#FBE3E7;color:#96000F;border:1px solid var(--ftd-riesgo);}
 
-/* Tabla registros */
+/* Productos múltiples */
+.items-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;flex-wrap:wrap;}
+.items-head label{font-size:12px;font-weight:700;color:var(--ftd-gris-600);}
+.item-row{display:grid;grid-template-columns:1fr 130px 40px;gap:8px;margin-bottom:8px;align-items:center;}
+.item-row input{width:100%;}
+.item-del{border:1px solid var(--ftd-gris-300);background:#fff;color:var(--ftd-riesgo);border-radius:var(--ftd-radio-sm);cursor:pointer;height:40px;font-weight:700;font-size:15px;}
+.item-del:hover{background:#FBE3E7;}
+.item-add{background:#fff;color:var(--ftd-azul-1);border:1px dashed var(--ftd-azul-2);border-radius:var(--ftd-radio-sm);padding:9px 16px;font-weight:700;cursor:pointer;font-family:inherit;font-size:13px;}
+.item-add:hover{background:var(--ftd-azul-2-100);}
+.items-hint{font-size:12px;color:var(--ftd-gris-500);margin:0 0 10px;}
+
 .tbl-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px;}
-.tbl-tools input[type=search]{flex:1;min-width:200px;}
+.tbl-tools input[type=search]{flex:1;min-width:180px;}
 .tbl-scroll{overflow-x:auto;border:var(--ftd-borde);border-radius:var(--ftd-radio);}
 table.reg{width:100%;border-collapse:collapse;font-size:13px;}
 table.reg thead th{background:var(--ftd-azul-1);color:#fff;text-align:left;font-weight:700;padding:10px 12px;font-size:11px;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;position:sticky;top:0;}
 table.reg tbody td{padding:9px 12px;border-bottom:1px solid var(--ftd-gris-200);vertical-align:top;}
 table.reg tbody tr:nth-child(even){background:var(--ftd-gris-100);}
 table.reg tbody tr:hover{background:var(--ftd-azul-2-100);}
-table.reg .num{text-align:right;font-variant-numeric:tabular-nums;}
+table.reg .num{text-align:right;font-variant-numeric:tabular-nums;font-weight:700;}
 .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:700;}
 .pill--mar{background:var(--ftd-azul-2-100);color:var(--ftd-azul-1-600);}
 .pill--vie{background:#F4F5D6;color:#6E7200;}
-.pill--med{background:#DCF4F2;color:#00655E;}
-.pill--misc{background:#EDE3F4;color:#470A68;}
+.pill--otro{background:var(--ftd-gris-200);color:var(--ftd-gris-700);}
+.prod-list{margin:0;padding:0;list-style:none;}
+.prod-list li{padding:1px 0;}
+.prod-list .q{color:var(--ftd-azul-2-700);font-weight:700;}
 .linkdel{color:var(--ftd-riesgo);cursor:pointer;font-weight:700;font-size:12px;background:none;border:0;font-family:inherit;}
 .empty{text-align:center;color:var(--ftd-gris-400);padding:40px 20px;font-size:14px;}
 
-/* Ranking mini */
 .rank{list-style:none;margin:0;padding:0;}
 .rank li{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--ftd-gris-200);}
 .rank li:last-child{border-bottom:0;}
 .rank .pos{width:22px;height:22px;border-radius:50%;background:var(--ftd-azul-1);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .rank .pos.p1{background:var(--ftd-azul-2);} .rank .pos.p2{background:var(--ftd-azul-2-700);} .rank .pos.p3{background:var(--ftd-gris-500);}
-.rank .nm{flex:1;font-weight:600;color:var(--ftd-gris-700);}
-.rank .qt{font-weight:700;color:var(--ftd-azul-1);font-variant-numeric:tabular-nums;}
+.rank .nm{flex:1;font-weight:600;color:var(--ftd-gris-700);min-width:0;overflow-wrap:anywhere;}
+.rank .qt{font-weight:700;color:var(--ftd-azul-1);font-variant-numeric:tabular-nums;white-space:nowrap;}
 .rank .bar{height:5px;background:var(--ftd-azul-2-200);border-radius:3px;margin-top:3px;}
 .rank .barfill{height:5px;background:var(--ftd-azul-2);border-radius:3px;}
 
-/* Estado Firebase */
 #fb-status{position:fixed;bottom:12px;right:12px;z-index:9999;background:rgba(0,20,60,.85);color:#fff;font-size:10px;font-weight:700;padding:5px 12px;border-radius:20px;display:flex;align-items:center;gap:6px;}
 #fb-dot{width:7px;height:7px;border-radius:50%;background:#A8AD00;}
 
-/* Pie */
 .foot{border-top:3px solid var(--ftd-azul-1);background:#fff;color:var(--ftd-gris-500);font-size:11px;padding:16px 26px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px;}
 .foot .logo svg{height:20px;width:auto;display:block;}
 
+/* ══════ RESPONSIVE MÓVIL ══════ */
 @media (max-width:768px){
-  .hdr{padding:14px 16px;gap:12px;} .hdr .hmeta{margin-left:0;text-align:left;width:100%;}
-  .wrap{padding:16px;} .kpis{grid-template-columns:1fr 1fr;} .kpi .val{font-size:24px;}
-  .grid2{grid-template-columns:1fr;} .chart-box{height:260px;} .filtro-info{margin-left:0;width:100%;}
-  table.reg{font-size:12px;} .card{padding:14px;}
+  .hdr{padding:12px 14px;gap:12px;}
+  .hdr .logo,.hdr .logo svg{height:30px;}
+  .hdr .htxt h1{font-size:16px;}
+  .hdr .htxt p{font-size:11px;}
+  .hdr .hmeta{margin-left:0;text-align:left;width:100%;}
+  .wrap{padding:14px;}
+  .kpis{grid-template-columns:1fr 1fr;gap:12px;}
+  .kpi{padding:14px;} .kpi .val{font-size:24px;}
+  .grid2{grid-template-columns:1fr;gap:16px;}
+  .chart-box{height:250px;} .chart-box.tall{height:270px;}
+  .card{padding:14px;margin-bottom:16px;}
+  .form-grid{grid-template-columns:1fr;}
+  .filtros{padding:12px;gap:10px;}
+  .filtros .fgrp{flex:1 1 44%;} .filtros .fgrp select{width:100%;}
+  .filtro-info{width:100%;margin-left:0;}
+  .tab{padding:12px 14px;font-size:13px;}
+  table.reg{font-size:12px;}
 }
-@media (max-width:400px){ .kpis{grid-template-columns:1fr;} }
+@media (max-width:480px){
+  .kpis{grid-template-columns:1fr;}
+  .kpi .val{font-size:26px;}
+  .item-row{grid-template-columns:1fr 74px 36px;gap:6px;}
+  .item-del{height:38px;}
+  .form-actions .btn{flex:1 1 auto;}
+}
+@media print{
+  .tabs,.no-print,#fb-status{display:none!important;}
+  body{background:#fff;} .card,.kpi{box-shadow:none;border:1px solid var(--ftd-gris-300);}
+  .hdr,table.reg thead th{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
 </style>
 </head>
 <body>
@@ -218,8 +245,6 @@ table.reg .num{text-align:right;font-variant-numeric:tabular-nums;}
     <div class="filtros">
       <div class="fgrp"><label for="fAno">Año</label><select id="fAno"></select></div>
       <div class="fgrp"><label for="fMes">Mes</label><select id="fMes"></select></div>
-      <div class="fgrp"><label for="fTorre">Torre</label>
-        <select id="fTorre"><option value="">Todas</option><option>Medicina</option><option>Misceláneos</option></select></div>
       <div class="filtro-info" id="filtroInfo"></div>
     </div>
 
@@ -228,26 +253,13 @@ table.reg .num{text-align:right;font-variant-numeric:tabular-nums;}
     <div class="grid2">
       <div class="card">
         <h3>Recipes emitidos por mes</h3>
-        <p class="chint">Tendencia de entregas registradas a lo largo del año seleccionado.</p>
+        <p class="chint">Cuántos Recipes se entregan cada mes del año seleccionado.</p>
         <div class="chart-box"><canvas id="chMes"></canvas></div>
       </div>
-      <div class="card">
-        <h3>Distribución por Torre / Zona</h3>
-        <p class="chint">Qué área concentra más entregas de Recipes en el período filtrado.</p>
-        <div class="chart-box"><canvas id="chZona"></canvas></div>
-      </div>
-    </div>
-
-    <div class="grid2">
       <div class="card">
         <h3>Supervisor que más lleva Recipes</h3>
         <p class="chint">Ranking de supervisores por cantidad de Recipes en el período.</p>
         <ul class="rank" id="rankSup"></ul>
-      </div>
-      <div class="card">
-        <h3>Colaborador con más Recipes emitidos</h3>
-        <p class="chint">A quién se le emiten más Recipes de donación.</p>
-        <ul class="rank" id="rankCol"></ul>
       </div>
     </div>
 
@@ -259,9 +271,15 @@ table.reg .num{text-align:right;font-variant-numeric:tabular-nums;}
       </div>
       <div class="card">
         <h3>Entregas por día de la semana</h3>
-        <p class="chint">Comparación Martes vs. Viernes (Recipes y unidades).</p>
+        <p class="chint">En qué días se entregan más Recipes y unidades.</p>
         <div class="chart-box tall"><canvas id="chDia"></canvas></div>
       </div>
+    </div>
+
+    <div class="card card--sec">
+      <h3>Colaborador con más Recipes emitidos</h3>
+      <p class="chint">Detalle complementario: a quién se le emiten más Recipes de donación.</p>
+      <ul class="rank" id="rankCol"></ul>
     </div>
   </section>
 
@@ -278,12 +296,11 @@ table.reg .num{text-align:right;font-variant-numeric:tabular-nums;}
             <input type="date" id="iFecha" required>
           </div>
           <div class="field">
-            <label for="iDia">Día</label>
-            <input type="text" id="iDia" readonly placeholder="Se calcula solo" style="background:var(--ftd-gris-100);">
-          </div>
-          <div class="field">
-            <label for="iNrecipe">N° de Recipe / correlativo</label>
-            <input type="text" id="iNrecipe" placeholder="Opcional (ej: 0458)">
+            <label for="iDia">Día de entrega <span class="req">*</span></label>
+            <select id="iDia" required>
+              <option>Lunes</option><option>Martes</option><option>Miércoles</option>
+              <option>Jueves</option><option>Viernes</option><option>Sábado</option><option>Domingo</option>
+            </select>
           </div>
           <div class="field">
             <label for="iSup">Supervisor <span class="req">*</span></label>
@@ -291,34 +308,19 @@ table.reg .num{text-align:right;font-variant-numeric:tabular-nums;}
             <datalist id="lSup"></datalist>
           </div>
           <div class="field">
-            <label for="iTorre">Torre <span class="req">*</span></label>
-            <select id="iTorre" required>
-              <option value="">— Selecciona —</option>
-              <option>Medicina</option>
-              <option>Misceláneos</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="iZona">Zona</label>
-            <select id="iZona"><option value="">— Selecciona torre —</option></select>
-          </div>
-          <div class="field">
             <label for="iCol">Colaborador que recibe <span class="req">*</span></label>
             <input type="text" id="iCol" list="lCol" required placeholder="Nombre del colaborador">
             <datalist id="lCol"></datalist>
           </div>
-          <div class="field">
-            <label for="iMed">Medicina / Producto <span class="req">*</span></label>
-            <input type="text" id="iMed" list="lMed" required placeholder="Descripción del producto">
-            <datalist id="lMed"></datalist>
-          </div>
-          <div class="field">
-            <label for="iCant">Cantidad (unidades) <span class="req">*</span></label>
-            <input type="number" id="iCant" min="1" step="1" required placeholder="0">
-          </div>
+
           <div class="field field-full">
-            <label for="iMotivo">Motivo de la donación</label>
-            <textarea id="iMotivo" rows="2" placeholder="Ej: producto próximo a vencer, merma administrativa, apoyo social..."></textarea>
+            <div class="items-head">
+              <label>Productos / medicinas entregados <span class="req">*</span></label>
+              <button type="button" class="item-add" id="btnAddItem">➕ Agregar producto</button>
+            </div>
+            <p class="items-hint">Un Recipe puede incluir varios productos. Escribe cada producto/medicina y las unidades entregadas de ese producto.</p>
+            <div id="itemsContainer"></div>
+            <datalist id="lMed"></datalist>
           </div>
         </div>
         <div class="form-actions">
@@ -334,7 +336,7 @@ table.reg .num{text-align:right;font-variant-numeric:tabular-nums;}
   <section class="view" id="view-registros">
     <div class="card">
       <div class="tbl-tools">
-        <input type="search" id="buscar" placeholder="🔎 Buscar por supervisor, colaborador, medicina, motivo...">
+        <input type="search" id="buscar" placeholder="🔎 Buscar por supervisor, colaborador, producto...">
         <button class="btn btn--acento btn--sm" id="btnCsv">⬇ Exportar CSV</button>
         <button class="btn btn--sm" id="btnImprimir">🖨 Imprimir</button>
       </div>
@@ -342,8 +344,8 @@ table.reg .num{text-align:right;font-variant-numeric:tabular-nums;}
         <table class="reg">
           <thead>
             <tr>
-              <th>Fecha</th><th>Día</th><th>N°</th><th>Supervisor</th><th>Torre</th><th>Zona</th>
-              <th>Colaborador</th><th>Medicina</th><th class="num">Cant.</th><th>Motivo</th><th></th>
+              <th>Fecha</th><th>Día</th><th>Supervisor</th><th>Colaborador</th>
+              <th>Productos / medicinas</th><th class="num">Uds.</th><th></th>
             </tr>
           </thead>
           <tbody id="tbody"></tbody>
@@ -370,11 +372,9 @@ window.KEY = 'ftd_donaciones_v1';
 window.datos = [];
 try { window.datos = JSON.parse(localStorage.getItem(window.KEY) || '[]') || []; } catch(e) { window.datos = []; }
 
-var ZONAS = {
-  'Medicina':    ['SDA','PA','PB','F','G'],
-  'Misceláneos': ['K','H','L','I','J','M']
-};
 var MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+var DIAS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+var DIAS_ORD = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
 var SERIE = ['#001E62','#418FDE','#00A499','#470A68','#A8AD00','#6BA8E6','#221C35','#9BC4EF','#1F6BB8','#C7DEF7'];
 var charts = {};
 var editId = null;
@@ -382,43 +382,45 @@ var editId = null;
 /* ══════════════════ UTILIDADES ══════════════════ */
 function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
-function nombreDia(iso){
-  if(!iso) return '';
-  var p = iso.split('-');
-  var d = new Date(Date.UTC(+p[0], +p[1]-1, +p[2]));
-  return ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'][d.getUTCDay()];
-}
-function fmtFecha(iso){ if(!iso) return ''; var p = iso.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; }
+function nombreDia(iso){ if(!iso) return ''; var p=iso.split('-'); var d=new Date(Date.UTC(+p[0],+p[1]-1,+p[2])); return DIAS[d.getUTCDay()]; }
+function fmtFecha(iso){ if(!iso) return ''; var p=iso.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; }
 function anioDe(iso){ return iso ? iso.slice(0,4) : ''; }
 function mesDe(iso){ return iso ? parseInt(iso.slice(5,7),10) : 0; }
+
+// Normaliza los productos de un registro (soporta el formato viejo medicina/cantidad)
+function getItems(r){
+  if(r && Array.isArray(r.items) && r.items.length) return r.items.filter(function(it){ return it && (it.producto||'').trim(); });
+  if(r && r.medicina) return [{producto:r.medicina, cantidad:+r.cantidad||0}];
+  return [];
+}
+function totalUds(r){ return getItems(r).reduce(function(s,it){ return s+(+it.cantidad||0); },0); }
 
 /* ══════════════════ PERSISTENCIA (Firebase con fusión por id) ══════════════════ */
 function _mergePorId(local, remoto){
   var map = {};
-  (remoto||[]).forEach(function(r){ if(r && r.id!=null) map[r.id] = r; });
-  (local ||[]).forEach(function(r){ if(r && r.id!=null) map[r.id] = r; });
-  var out = []; for(var k in map) out.push(map[k]); return out;
+  (remoto||[]).forEach(function(r){ if(r && r.id!=null) map[r.id]=r; });
+  (local ||[]).forEach(function(r){ if(r && r.id!=null) map[r.id]=r; });
+  var out=[]; for(var k in map) out.push(map[k]); return out;
 }
 async function save(){
   localStorage.setItem(window.KEY, JSON.stringify(window.datos));
   try{
-    if(typeof window.fbSave === 'function'){
-      if(typeof window.fbLoad === 'function'){
+    if(typeof window.fbSave==='function'){
+      if(typeof window.fbLoad==='function'){
         try{
           var remoto = await window.fbLoad('donaciones_data','main');
           if(remoto && Array.isArray(remoto)){
             var merged = _mergePorId(window.datos, remoto);
-            window.datos.length = 0; merged.forEach(function(d){ window.datos.push(d); });
+            window.datos.length=0; merged.forEach(function(d){ window.datos.push(d); });
             localStorage.setItem(window.KEY, JSON.stringify(window.datos));
             refrescarTodo();
           }
-        }catch(e){ console.warn('[save] no se pudo fusionar:', e); }
+        }catch(e){ console.warn('[save] fusión:', e); }
       }
       window.fbSave('donaciones_data','main', window.datos);
     }
   }catch(e){ console.warn('[save]', e); }
 }
-// Borrado: marca tombstone para que la fusión no lo resucite desde otro dispositivo
 async function eliminar(id){
   var i = window.datos.findIndex(function(r){ return r.id===id; });
   if(i<0) return;
@@ -429,7 +431,7 @@ async function eliminar(id){
       var remoto = await window.fbLoad('donaciones_data','main');
       if(remoto && Array.isArray(remoto)){
         var merged = _mergePorId(window.datos, remoto);
-        window.datos.length = 0; merged.forEach(function(d){ window.datos.push(d); });
+        window.datos.length=0; merged.forEach(function(d){ window.datos.push(d); });
       }
     }
   }catch(e){}
@@ -437,48 +439,53 @@ async function eliminar(id){
   localStorage.setItem(window.KEY, JSON.stringify(window.datos));
   refrescarTodo();
 }
-// Solo registros vivos (sin tombstones)
 function vivos(){ return (window.datos||[]).filter(function(r){ return r && r.id && !r._deleted && r.fecha; }); }
 
 /* ══════════════════ FILTRADO ══════════════════ */
 function registrosFiltrados(){
   var ano = document.getElementById('fAno').value;
   var mes = document.getElementById('fMes').value;
-  var torre = document.getElementById('fTorre').value;
   return vivos().filter(function(r){
     if(ano && anioDe(r.fecha)!==ano) return false;
     if(mes && mesDe(r.fecha)!==parseInt(mes,10)) return false;
-    if(torre && r.torre!==torre) return false;
     return true;
   });
 }
 
 /* ══════════════════ SELECTORES DE PERÍODO ══════════════════ */
 function poblarPeriodos(){
-  var anos = {};
-  vivos().forEach(function(r){ anos[anioDe(r.fecha)] = true; });
-  var lista = Object.keys(anos).sort();
-  var hoyA = String(new Date().getFullYear());
+  var anos={}; vivos().forEach(function(r){ anos[anioDe(r.fecha)]=true; });
+  var lista=Object.keys(anos).sort();
+  var hoyA=String(new Date().getFullYear());
   if(lista.indexOf(hoyA)<0) lista.push(hoyA);
   lista.sort();
-  var selA = document.getElementById('fAno');
-  var prevA = selA.value || hoyA;
-  selA.innerHTML = lista.map(function(a){ return '<option value="'+a+'">'+a+'</option>'; }).join('');
-  selA.value = (lista.indexOf(prevA)>=0)? prevA : lista[lista.length-1];
+  var selA=document.getElementById('fAno');
+  var prevA=selA.value||hoyA;
+  selA.innerHTML=lista.map(function(a){ return '<option value="'+a+'">'+a+'</option>'; }).join('');
+  selA.value=(lista.indexOf(prevA)>=0)?prevA:lista[lista.length-1];
 
-  var selM = document.getElementById('fMes');
-  var prevM = selM.value;
-  var opts = '<option value="">Todos los meses</option>';
-  for(var m=1;m<=12;m++) opts += '<option value="'+m+'">'+MESES[m-1]+'</option>';
-  selM.innerHTML = opts;
-  if(prevM!==null && prevM!==undefined) selM.value = prevM;
+  var selM=document.getElementById('fMes');
+  var prevM=selM.value;
+  var opts='<option value="">Todos los meses</option>';
+  for(var m=1;m<=12;m++) opts+='<option value="'+m+'">'+MESES[m-1]+'</option>';
+  selM.innerHTML=opts;
+  if(prevM!==null&&prevM!==undefined) selM.value=prevM;
 }
 
 /* ══════════════════ AGREGACIONES ══════════════════ */
-function contarPor(regs, campo){
-  var m = {};
-  regs.forEach(function(r){ var k=(r[campo]||'—').trim()||'—'; if(!m[k]) m[k]={n:0,u:0}; m[k].n++; m[k].u+=(+r.cantidad||0); });
+// Cuenta Recipes (registros) por un campo del registro
+function contarRecipesPor(regs, campo){
+  var m={};
+  regs.forEach(function(r){ var k=(r[campo]||'—').trim()||'—'; if(!m[k]) m[k]={n:0,u:0}; m[k].n++; m[k].u+=totalUds(r); });
   return Object.keys(m).map(function(k){ return {k:k,n:m[k].n,u:m[k].u}; }).sort(function(a,b){ return b.n-a.n; });
+}
+// Agrega productos por unidades a través de todos los items
+function agregarMedicinas(regs){
+  var m={};
+  regs.forEach(function(r){ getItems(r).forEach(function(it){
+    var k=(it.producto||'—').trim()||'—'; if(!m[k]) m[k]={u:0,n:0}; m[k].u+=(+it.cantidad||0); m[k].n++;
+  }); });
+  return Object.keys(m).map(function(k){ return {k:k,u:m[k].u,n:m[k].n}; }).sort(function(a,b){ return b.u-a.u; });
 }
 
 /* ══════════════════ DASHBOARD ══════════════════ */
@@ -486,62 +493,52 @@ function renderDashboard(){
   var regs = registrosFiltrados();
   var ano = document.getElementById('fAno').value;
   var mes = document.getElementById('fMes').value;
-  var torre = document.getElementById('fTorre').value;
 
-  // Info de filtro
-  var periodo = (mes? MESES[parseInt(mes,10)-1]+' ' : '') + ano + (torre? ' · Torre '+torre : '');
-  document.getElementById('filtroInfo').innerHTML = 'Mostrando: <b>'+esc(periodo)+'</b>';
+  document.getElementById('filtroInfo').innerHTML = 'Mostrando: <b>'+esc((mes?MESES[parseInt(mes,10)-1]+' ':'')+ano)+'</b>';
 
-  // KPIs
   var totalRec = regs.length;
-  var totalUds = regs.reduce(function(s,r){ return s+(+r.cantidad||0); },0);
-  var sups = contarPor(regs,'supervisor');
-  var cols = contarPor(regs,'colaborador');
-  var meds = contarPor(regs,'medicina');
-  var supTop = sups[0], colTop = cols[0], medTop = meds[0];
+  var totalUnd = regs.reduce(function(s,r){ return s+totalUds(r); },0);
+  var meds = agregarMedicinas(regs);
+  var medTop = meds[0];
 
-  var kpiHtml = '';
-  kpiHtml += kpi('marca','Recipes en el período', totalRec, (mes? MESES[parseInt(mes,10)-1]:'Año')+' '+ano);
-  kpiHtml += kpi('','Unidades donadas', totalUds.toLocaleString('es'), 'Suma de cantidades');
-  kpiHtml += kpi('ok','Supervisor top', supTop? esc(supTop.k):'—', supTop? supTop.n+' recipes':'sin datos');
-  kpiHtml += kpi('alerta','Colaborador top', colTop? esc(colTop.k):'—', colTop? colTop.n+' recipes':'sin datos');
-  kpiHtml += kpi('','Medicina más entregada', medTop? esc(medTop.k):'—', medTop? medTop.u.toLocaleString('es')+' uds':'sin datos');
+  var kpiHtml='';
+  kpiHtml += kpi('marca','Recipes en el período', totalRec, (mes?MESES[parseInt(mes,10)-1]:'Año')+' '+ano);
+  kpiHtml += kpi('','Unidades donadas', totalUnd.toLocaleString('es'), 'Suma de unidades entregadas');
+  kpiHtml += kpi('ok','Medicina más entregada', medTop?esc(medTop.k):'—', medTop?medTop.u.toLocaleString('es')+' uds':'sin datos');
   document.getElementById('kpis').innerHTML = kpiHtml;
 
-  // Rankings
-  renderRank('rankSup', sups, 'recipes');
-  renderRank('rankCol', cols, 'recipes');
+  renderRank('rankSup', contarRecipesPor(regs,'supervisor'), 'recipes');
+  renderRank('rankCol', contarRecipesPor(regs,'colaborador'), 'recipes');
 
-  // Charts (guarda: si Chart.js aún no cargó, el resto del dashboard igual funciona)
-  if(typeof Chart !== 'undefined'){
-    try{ chartMes(ano, torre); chartZona(regs); chartMedicinas(meds); chartDia(regs); }
+  if(typeof Chart!=='undefined'){
+    try{ chartMes(ano); chartMedicinas(meds); chartDia(regs); }
     catch(e){ console.warn('[charts]', e); }
   }
 }
 function kpi(mod,lbl,val,sub){
-  var cls = mod? ' kpi--'+mod : '';
+  var cls=mod?' kpi--'+mod:'';
   return '<div class="kpi'+cls+'"><div class="lbl">'+lbl+'</div><div class="val">'+val+'</div><div class="sub">'+(sub||'')+'</div></div>';
 }
 function renderRank(id, arr, unidad){
-  var el = document.getElementById(id);
-  if(!arr.length){ el.innerHTML = '<li style="color:var(--ftd-gris-400);justify-content:center;">Sin datos en el período</li>'; return; }
-  var max = arr[0].n || 1;
-  el.innerHTML = arr.slice(0,7).map(function(o,i){
-    var pc = Math.round((o.n/max)*100);
-    var pcls = i===0?'p1':i===1?'p2':i===2?'p3':'';
+  var el=document.getElementById(id);
+  if(!arr.length){ el.innerHTML='<li style="color:var(--ftd-gris-400);justify-content:center;">Sin datos en el período</li>'; return; }
+  var max=arr[0].n||1;
+  el.innerHTML=arr.slice(0,7).map(function(o,i){
+    var pc=Math.round((o.n/max)*100);
+    var pcls=i===0?'p1':i===1?'p2':i===2?'p3':'';
     return '<li><span class="pos '+pcls+'">'+(i+1)+'</span>'+
-      '<div style="flex:1;"><div class="nm">'+esc(o.k)+'</div><div class="bar"><div class="barfill" style="width:'+pc+'%"></div></div></div>'+
+      '<div style="flex:1;min-width:0;"><div class="nm">'+esc(o.k)+'</div><div class="bar"><div class="barfill" style="width:'+pc+'%"></div></div></div>'+
       '<span class="qt">'+o.n+' <small style="font-weight:400;color:var(--ftd-gris-400);">'+unidad+'</small></span></li>';
   }).join('');
 }
 function destruir(id){ if(charts[id]){ charts[id].destroy(); charts[id]=null; } }
 
-function chartMes(ano, torre){
+function chartMes(ano){
   destruir('chMes');
-  var recs = vivos().filter(function(r){ return anioDe(r.fecha)===ano && (!torre || r.torre===torre); });
-  var porMes = new Array(12).fill(0), udsMes = new Array(12).fill(0);
-  recs.forEach(function(r){ var m=mesDe(r.fecha); if(m>=1&&m<=12){ porMes[m-1]++; udsMes[m-1]+=(+r.cantidad||0); } });
-  charts['chMes'] = new Chart(document.getElementById('chMes'), {
+  var recs = vivos().filter(function(r){ return anioDe(r.fecha)===ano; });
+  var porMes=new Array(12).fill(0), udsMes=new Array(12).fill(0);
+  recs.forEach(function(r){ var m=mesDe(r.fecha); if(m>=1&&m<=12){ porMes[m-1]++; udsMes[m-1]+=totalUds(r); } });
+  charts['chMes']=new Chart(document.getElementById('chMes'),{
     type:'bar',
     data:{ labels:MESES.map(function(m){return m.slice(0,3);}), datasets:[
       { label:'Recipes', data:porMes, backgroundColor:'#001E62', borderRadius:4, yAxisID:'y' },
@@ -554,42 +551,26 @@ function chartMes(ano, torre){
                y1:{ beginAtZero:true, position:'right', grid:{drawOnChartArea:false}, title:{display:true,text:'Unidades'} } } }
   });
 }
-function chartZona(regs){
-  destruir('chZona');
-  var agg = {};
-  regs.forEach(function(r){ var k=(r.torre||'—')+' · '+(r.zona||'s/z'); agg[k]=(agg[k]||0)+1; });
-  var labels = Object.keys(agg).sort(function(a,b){ return agg[b]-agg[a]; });
-  var data = labels.map(function(k){ return agg[k]; });
-  if(!labels.length){ labels=['Sin datos']; data=[1]; }
-  charts['chZona'] = new Chart(document.getElementById('chZona'), {
-    type:'doughnut',
-    data:{ labels:labels, datasets:[{ data:data, backgroundColor:SERIE, borderWidth:2, borderColor:'#fff' }] },
-    options:{ responsive:true, maintainAspectRatio:false, animation:false,
-      plugins:{ legend:{ position:'right', labels:{ boxWidth:12, font:{size:11} } } }, cutout:'55%' }
-  });
-}
 function chartMedicinas(meds){
   destruir('chMed');
-  var top = meds.slice().sort(function(a,b){ return b.u-a.u; }).slice(0,8);
-  var labels = top.map(function(o){ return o.k.length>26? o.k.slice(0,24)+'…' : o.k; });
-  var data = top.map(function(o){ return o.u; });
+  var top=meds.slice(0,8);
+  var labels=top.map(function(o){ return o.k.length>26?o.k.slice(0,24)+'…':o.k; });
+  var data=top.map(function(o){ return o.u; });
   if(!labels.length){ labels=['Sin datos']; data=[0]; }
-  charts['chMed'] = new Chart(document.getElementById('chMed'), {
+  charts['chMed']=new Chart(document.getElementById('chMed'),{
     type:'bar',
     data:{ labels:labels, datasets:[{ label:'Unidades donadas', data:data, backgroundColor:'#418FDE', borderRadius:4 }] },
     options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false, animation:false,
-      plugins:{ legend:{ display:false } },
-      scales:{ x:{ beginAtZero:true } } }
+      plugins:{ legend:{ display:false } }, scales:{ x:{ beginAtZero:true } } }
   });
 }
 function chartDia(regs){
   destruir('chDia');
-  var dias = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
-  var recN = {}, recU = {};
-  regs.forEach(function(r){ var d=r.dia||nombreDia(r.fecha); recN[d]=(recN[d]||0)+1; recU[d]=(recU[d]||0)+(+r.cantidad||0); });
-  var present = dias.filter(function(d){ return recN[d]; });
-  if(!present.length) present = ['Martes','Viernes'];
-  charts['chDia'] = new Chart(document.getElementById('chDia'), {
+  var recN={}, recU={};
+  regs.forEach(function(r){ var d=r.dia||nombreDia(r.fecha); recN[d]=(recN[d]||0)+1; recU[d]=(recU[d]||0)+totalUds(r); });
+  var present=DIAS_ORD.filter(function(d){ return recN[d]; });
+  if(!present.length) present=['Martes','Viernes'];
+  charts['chDia']=new Chart(document.getElementById('chDia'),{
     type:'bar',
     data:{ labels:present, datasets:[
       { label:'Recipes', data:present.map(function(d){return recN[d]||0;}), backgroundColor:'#001E62', borderRadius:4 },
@@ -601,154 +582,174 @@ function chartDia(regs){
 }
 
 /* ══════════════════ FORMULARIO ══════════════════ */
-function initForm(){
-  var f = document.getElementById('form');
-  var iFecha = document.getElementById('iFecha');
-  var iTorre = document.getElementById('iTorre');
-  var iZona = document.getElementById('iZona');
-
-  // Fecha por defecto: hoy
-  iFecha.value = new Date().toISOString().slice(0,10);
-  document.getElementById('iDia').value = nombreDia(iFecha.value);
-  iFecha.addEventListener('change', function(){ document.getElementById('iDia').value = nombreDia(iFecha.value); });
-
-  iTorre.addEventListener('change', function(){
-    var z = ZONAS[iTorre.value] || [];
-    iZona.innerHTML = '<option value="">— Todas / N/A —</option>' + z.map(function(x){ return '<option>'+x+'</option>'; }).join('');
+function addItemRow(prod, cant){
+  var c=document.getElementById('itemsContainer');
+  var div=document.createElement('div');
+  div.className='item-row';
+  div.innerHTML='<input class="item-prod" list="lMed" placeholder="Descripción del producto / medicina">'+
+    '<input class="item-cant" type="number" min="1" step="1" placeholder="Uds">'+
+    '<button type="button" class="item-del" title="Quitar">✕</button>';
+  c.appendChild(div);
+  if(prod!=null) div.querySelector('.item-prod').value=prod;
+  if(cant!=null) div.querySelector('.item-cant').value=cant;
+  div.querySelector('.item-del').addEventListener('click', function(){
+    var rows=document.querySelectorAll('#itemsContainer .item-row');
+    if(rows.length>1) div.remove();
+    else { div.querySelector('.item-prod').value=''; div.querySelector('.item-cant').value=''; }
   });
+}
+function resetItems(){ document.getElementById('itemsContainer').innerHTML=''; addItemRow(); }
+function collectItems(){
+  var items=[];
+  document.querySelectorAll('#itemsContainer .item-row').forEach(function(row){
+    var p=row.querySelector('.item-prod').value.trim();
+    var c=parseInt(row.querySelector('.item-cant').value,10)||0;
+    if(p) items.push({producto:p, cantidad:c});
+  });
+  return items;
+}
+function initForm(){
+  var f=document.getElementById('form');
+  var iFecha=document.getElementById('iFecha');
+  var iDia=document.getElementById('iDia');
+
+  iFecha.value=new Date().toISOString().slice(0,10);
+  iDia.value=nombreDia(iFecha.value);
+  iFecha.addEventListener('change', function(){ if(iFecha.value) iDia.value=nombreDia(iFecha.value); });
+
+  document.getElementById('btnAddItem').addEventListener('click', function(){ addItemRow(); });
+  resetItems();
 
   f.addEventListener('submit', function(ev){
     ev.preventDefault();
-    var reg = {
-      id: editId || uid(),
+    var items=collectItems();
+    var reg={
+      id: editId||uid(),
       fecha: iFecha.value,
-      dia: nombreDia(iFecha.value),
-      nrecipe: document.getElementById('iNrecipe').value.trim(),
+      dia: iDia.value,
       supervisor: document.getElementById('iSup').value.trim(),
-      torre: iTorre.value,
-      zona: iZona.value,
       colaborador: document.getElementById('iCol').value.trim(),
-      medicina: document.getElementById('iMed').value.trim(),
-      cantidad: parseInt(document.getElementById('iCant').value,10)||0,
-      motivo: document.getElementById('iMotivo').value.trim(),
+      items: items,
       ts: Date.now()
     };
-    if(!reg.fecha || !reg.supervisor || !reg.torre || !reg.colaborador || !reg.medicina || reg.cantidad<=0){
-      return flash('Completa todos los campos obligatorios (*) con una cantidad válida.', false);
+    if(!reg.fecha||!reg.dia||!reg.supervisor||!reg.colaborador){
+      return flash('Completa fecha, día, supervisor y colaborador.', false);
+    }
+    if(!items.length){ return flash('Agrega al menos un producto o medicina.', false); }
+    if(items.some(function(it){ return (+it.cantidad||0)<=0; })){
+      return flash('Cada producto debe tener una cantidad de unidades mayor a 0.', false);
     }
     if(editId){
-      var i = window.datos.findIndex(function(r){ return r.id===editId; });
-      if(i>=0) window.datos[i] = reg; else window.datos.push(reg);
-    } else {
-      window.datos.push(reg);
-    }
+      var i=window.datos.findIndex(function(r){ return r.id===editId; });
+      if(i>=0) window.datos[i]=reg; else window.datos.push(reg);
+    } else { window.datos.push(reg); }
     save();
-    flash(editId? '✓ Recipe actualizado y sincronizado.' : '✓ Recipe registrado y sincronizado en la nube.', true);
-    editId = null;
-    document.getElementById('editHint').textContent = '';
+    flash(editId?'✓ Recipe actualizado y sincronizado.':'✓ Recipe registrado y sincronizado en la nube.', true);
+    editId=null; document.getElementById('editHint').textContent='';
     f.reset();
-    iFecha.value = new Date().toISOString().slice(0,10);
-    document.getElementById('iDia').value = nombreDia(iFecha.value);
-    iZona.innerHTML = '<option value="">— Selecciona torre —</option>';
+    iFecha.value=new Date().toISOString().slice(0,10);
+    iDia.value=nombreDia(iFecha.value);
+    resetItems();
   });
 
   f.addEventListener('reset', function(){
-    editId = null; document.getElementById('editHint').textContent = '';
+    editId=null; document.getElementById('editHint').textContent='';
     setTimeout(function(){
-      iFecha.value = new Date().toISOString().slice(0,10);
-      document.getElementById('iDia').value = nombreDia(iFecha.value);
+      iFecha.value=new Date().toISOString().slice(0,10);
+      iDia.value=nombreDia(iFecha.value);
+      resetItems();
     },0);
   });
 }
 function flash(msg, ok){
-  var m = document.getElementById('formMsg');
-  m.textContent = msg; m.className = 'msg ' + (ok?'ok':'err');
+  var m=document.getElementById('formMsg');
+  m.textContent=msg; m.className='msg '+(ok?'ok':'err');
   m.scrollIntoView({behavior:'smooth',block:'nearest'});
   if(ok) setTimeout(function(){ m.className='msg'; }, 4000);
 }
 function editar(id){
-  var r = window.datos.find(function(x){ return x.id===id; });
+  var r=window.datos.find(function(x){ return x.id===id; });
   if(!r) return;
-  editId = id;
-  document.getElementById('iFecha').value = r.fecha;
-  document.getElementById('iDia').value = r.dia || nombreDia(r.fecha);
-  document.getElementById('iNrecipe').value = r.nrecipe||'';
-  document.getElementById('iSup').value = r.supervisor||'';
-  document.getElementById('iTorre').value = r.torre||'';
-  var z = ZONAS[r.torre]||[];
-  document.getElementById('iZona').innerHTML = '<option value="">— Todas / N/A —</option>' + z.map(function(x){ return '<option'+(x===r.zona?' selected':'')+'>'+x+'</option>'; }).join('');
-  document.getElementById('iCol').value = r.colaborador||'';
-  document.getElementById('iMed').value = r.medicina||'';
-  document.getElementById('iCant').value = r.cantidad||'';
-  document.getElementById('iMotivo').value = r.motivo||'';
-  document.getElementById('editHint').textContent = '✏️ Editando Recipe existente';
-  irA('registrar');
-  window.scrollTo({top:0,behavior:'smooth'});
+  editId=id;
+  document.getElementById('iFecha').value=r.fecha;
+  document.getElementById('iDia').value=r.dia||nombreDia(r.fecha);
+  document.getElementById('iSup').value=r.supervisor||'';
+  document.getElementById('iCol').value=r.colaborador||'';
+  document.getElementById('itemsContainer').innerHTML='';
+  var items=getItems(r);
+  if(!items.length) items=[{producto:'',cantidad:''}];
+  items.forEach(function(it){ addItemRow(it.producto, it.cantidad); });
+  document.getElementById('editHint').textContent='✏️ Editando Recipe existente';
+  irA('registrar'); window.scrollTo({top:0,behavior:'smooth'});
 }
 
-/* ══════════════════ AUTOCOMPLETADO (datalists) ══════════════════ */
+/* ══════════════════ AUTOCOMPLETADO ══════════════════ */
 function actualizarDatalists(){
-  var s={}, c={}, m={};
-  vivos().forEach(function(r){ if(r.supervisor)s[r.supervisor]=1; if(r.colaborador)c[r.colaborador]=1; if(r.medicina)m[r.medicina]=1; });
+  var s={},c={},m={};
+  vivos().forEach(function(r){
+    if(r.supervisor)s[r.supervisor]=1;
+    if(r.colaborador)c[r.colaborador]=1;
+    getItems(r).forEach(function(it){ if(it.producto)m[it.producto]=1; });
+  });
   fillList('lSup', Object.keys(s).sort());
   fillList('lCol', Object.keys(c).sort());
   fillList('lMed', Object.keys(m).sort());
 }
 function fillList(id, arr){
-  var el = document.getElementById(id); if(!el) return;
-  el.innerHTML = arr.map(function(v){ return '<option value="'+esc(v)+'">'; }).join('');
+  var el=document.getElementById(id); if(!el) return;
+  el.innerHTML=arr.map(function(v){ return '<option value="'+esc(v)+'">'; }).join('');
 }
 
 /* ══════════════════ TABLA DE REGISTROS ══════════════════ */
 function renderTabla(){
-  var q = (document.getElementById('buscar').value||'').toLowerCase().trim();
-  var regs = vivos().slice().sort(function(a,b){
+  var q=(document.getElementById('buscar').value||'').toLowerCase().trim();
+  var regs=vivos().slice().sort(function(a,b){
     if(a.fecha!==b.fecha) return b.fecha.localeCompare(a.fecha);
     return (b.ts||0)-(a.ts||0);
   });
   if(q){
-    regs = regs.filter(function(r){
-      return [r.supervisor,r.colaborador,r.medicina,r.motivo,r.torre,r.zona,r.nrecipe,r.dia]
-        .join(' ').toLowerCase().indexOf(q)>=0;
+    regs=regs.filter(function(r){
+      var prods=getItems(r).map(function(it){return it.producto;}).join(' ');
+      return [r.supervisor,r.colaborador,prods,r.dia].join(' ').toLowerCase().indexOf(q)>=0;
     });
   }
-  var tb = document.getElementById('tbody');
-  document.getElementById('emptyReg').style.display = regs.length? 'none':'block';
-  tb.innerHTML = regs.map(function(r){
-    var diaCls = r.dia==='Martes'?'pill--mar': r.dia==='Viernes'?'pill--vie':'';
-    var torreCls = r.torre==='Medicina'?'pill--med': r.torre==='Misceláneos'?'pill--misc':'';
+  var tb=document.getElementById('tbody');
+  document.getElementById('emptyReg').style.display=regs.length?'none':'block';
+  tb.innerHTML=regs.map(function(r){
+    var diaCls=r.dia==='Martes'?'pill--mar':r.dia==='Viernes'?'pill--vie':'pill--otro';
+    var prods='<ul class="prod-list">'+getItems(r).map(function(it){
+      return '<li>'+esc(it.producto)+' <span class="q">×'+(+it.cantidad||0)+'</span></li>';
+    }).join('')+'</ul>';
     return '<tr>'+
       '<td style="white-space:nowrap;">'+fmtFecha(r.fecha)+'</td>'+
-      '<td>'+(r.dia? '<span class="pill '+diaCls+'">'+esc(r.dia)+'</span>':'')+'</td>'+
-      '<td>'+esc(r.nrecipe||'')+'</td>'+
+      '<td>'+(r.dia?'<span class="pill '+diaCls+'">'+esc(r.dia)+'</span>':'')+'</td>'+
       '<td>'+esc(r.supervisor)+'</td>'+
-      '<td>'+(r.torre? '<span class="pill '+torreCls+'">'+esc(r.torre)+'</span>':'')+'</td>'+
-      '<td>'+esc(r.zona||'')+'</td>'+
       '<td>'+esc(r.colaborador)+'</td>'+
-      '<td>'+esc(r.medicina)+'</td>'+
-      '<td class="num">'+(r.cantidad||0)+'</td>'+
-      '<td style="max-width:220px;">'+esc(r.motivo||'')+'</td>'+
+      '<td style="min-width:200px;">'+prods+'</td>'+
+      '<td class="num">'+totalUds(r)+'</td>'+
       '<td style="white-space:nowrap;"><button class="linkdel" data-edit="'+r.id+'" style="color:var(--ftd-azul-2-700);margin-right:8px;">Editar</button>'+
       '<button class="linkdel" data-del="'+r.id+'">Eliminar</button></td>'+
     '</tr>';
   }).join('');
 }
 
-/* ══════════════════ EXPORTAR CSV ══════════════════ */
+/* ══════════════════ EXPORTAR CSV (una fila por producto) ══════════════════ */
 function exportarCsv(){
-  var regs = vivos().slice().sort(function(a,b){ return a.fecha.localeCompare(b.fecha); });
-  var head = ['Fecha','Dia','N Recipe','Supervisor','Torre','Zona','Colaborador','Medicina','Cantidad','Motivo'];
-  var rows = regs.map(function(r){
-    return [fmtFecha(r.fecha), r.dia||'', r.nrecipe||'', r.supervisor||'', r.torre||'', r.zona||'',
-            r.colaborador||'', r.medicina||'', r.cantidad||0, (r.motivo||'').replace(/\n/g,' ')];
+  var regs=vivos().slice().sort(function(a,b){ return a.fecha.localeCompare(b.fecha); });
+  var head=['Fecha','Dia de entrega','Supervisor','Colaborador','Producto/Medicina','Cantidad'];
+  var rows=[];
+  regs.forEach(function(r){
+    getItems(r).forEach(function(it){
+      rows.push([fmtFecha(r.fecha), r.dia||'', r.supervisor||'', r.colaborador||'', it.producto||'', (+it.cantidad||0)]);
+    });
   });
-  var csv = [head].concat(rows).map(function(row){
-    return row.map(function(c){ var s=String(c); return /[",;\n]/.test(s)? '"'+s.replace(/"/g,'""')+'"' : s; }).join(';');
+  var csv=[head].concat(rows).map(function(row){
+    return row.map(function(c){ var s=String(c); return /[",;\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; }).join(';');
   }).join('\r\n');
-  var blob = new Blob(['﻿'+csv], {type:'text/csv;charset=utf-8;'});
-  var a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'donaciones_recipes_'+new Date().toISOString().slice(0,10)+'.csv';
+  var blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8;'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='donaciones_recipes_'+new Date().toISOString().slice(0,10)+'.csv';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
 }
 
@@ -761,36 +762,29 @@ function irA(view){
 }
 
 /* ══════════════════ REFRESCO GLOBAL ══════════════════ */
-window.refrescarTodo = function(){
-  document.getElementById('hcount').textContent = vivos().length;
+window.refrescarTodo=function(){
+  document.getElementById('hcount').textContent=vivos().length;
   poblarPeriodos();
   actualizarDatalists();
-  var activa = document.querySelector('.view.active');
-  if(activa && activa.id==='view-dashboard') renderDashboard();
-  if(activa && activa.id==='view-registros') renderTabla();
+  var activa=document.querySelector('.view.active');
+  if(activa&&activa.id==='view-dashboard') renderDashboard();
+  if(activa&&activa.id==='view-registros') renderTabla();
 };
 
 /* ══════════════════ ARRANQUE ══════════════════ */
 document.addEventListener('DOMContentLoaded', function(){
-  document.getElementById('hoy').textContent = new Date().toLocaleDateString('es',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-
-  document.querySelectorAll('.tab').forEach(function(t){
-    t.addEventListener('click', function(){ irA(t.dataset.view); });
-  });
-  ['fAno','fMes','fTorre'].forEach(function(id){
-    document.getElementById(id).addEventListener('change', renderDashboard);
-  });
+  document.getElementById('hoy').textContent=new Date().toLocaleDateString('es',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.querySelectorAll('.tab').forEach(function(t){ t.addEventListener('click', function(){ irA(t.dataset.view); }); });
+  ['fAno','fMes'].forEach(function(id){ document.getElementById(id).addEventListener('change', renderDashboard); });
   document.getElementById('buscar').addEventListener('input', renderTabla);
   document.getElementById('btnCsv').addEventListener('click', exportarCsv);
   document.getElementById('btnImprimir').addEventListener('click', function(){ window.print(); });
-
   document.getElementById('tbody').addEventListener('click', function(ev){
-    var del = ev.target.getAttribute('data-del');
-    var ed = ev.target.getAttribute('data-edit');
+    var del=ev.target.getAttribute('data-del');
+    var ed=ev.target.getAttribute('data-edit');
     if(del){ if(confirm('¿Eliminar este Recipe? Esta acción se sincroniza para todo el equipo.')) eliminar(del); }
     if(ed){ editar(ed); }
   });
-
   initForm();
   refrescarTodo();
 });
